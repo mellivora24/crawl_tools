@@ -1,0 +1,19 @@
+{
+  "websites": [
+    {
+      "name": "AAEON",
+      "domain": "aaeon.com",
+      "product_selector": "div.product_detail_render_wr",
+      "image_selector": "div.product_detail_render_wr img",
+      "requires_js": true,
+      "scroll_to_load": true
+    },
+    {
+      "name": "ExampleShop",
+      "domain": "example.com",
+      "product_selector": "div.product-info",
+      "image_selector": "div.product-images img",
+      "requires_js": false,
+      "scroll_to_load": false
+    }
+  ]}

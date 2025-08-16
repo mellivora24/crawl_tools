@@ -1,0 +1,29 @@
+{
+  "app_name": "CRAWL",
+  "version": "1.0.0",
+  "description": "Ứng dụng thu thập dữ liệu sản phẩm",
+  "default_settings": {
+    "delay_between_requests": 2,
+    "retry_attempts": 3,
+    "headless_mode": true,
+    "max_concurrent_requests": 5,
+    "timeout": 30
+  },
+  "ui_settings": {
+    "window_width": 800,
+    "window_height": 600,
+    "theme": "light",
+    "language": "vi"
+  },
+  "output_formats": [
+    "csv",
+    "excel",
+    "json"
+  ],
+  "supported_websites": [
+    "shopify",
+    "woocommerce",
+    "magento",
+    "custom"
+  ]
+}

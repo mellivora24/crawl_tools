@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  crawl_app:
+    build: .
+    container_name: crawl_app
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      - DISPLAY=:99
+      - PYTHONUNBUFFERED=1
+    shm_size: "2g"
+    command: >
+      bash -lc "xvfb-run -a python crawl_app.py"
