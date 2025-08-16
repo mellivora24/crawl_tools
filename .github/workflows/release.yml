@@ -3,12 +3,15 @@ name: Build & Release PyQt6 App
 on:
   push:
     tags:
-      - "v*"   # Ví dụ: v1.0, v1.0.1
+      - "v*"
+
+permissions:
+  contents: write   # ✅ cần để tạo release
+  packages: write
 
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -25,18 +28,17 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --noconfirm --onefile --windowed crawl_app.py
+          pyinstaller --noconfirm --onefile --windowed main.py
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: PyQt6-App
-          path: dist/crawl_app.exe
+          path: dist/main.exe
 
   release:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
       - name: Download build artifact
         uses: actions/download-artifact@v4
@@ -47,6 +49,6 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./dist/crawl_app.exe
+          files: ./dist/main.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
