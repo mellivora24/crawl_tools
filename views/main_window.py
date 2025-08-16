@@ -52,15 +52,15 @@ class CrawlThread(QThread):
                     break
 
                 # Update progress
-                progress = int((link['index'] / num_of_links) * 100)
+                progress = int((link['index']+1 / num_of_links) * 100)
                 self.progress_updated.emit(progress)
 
                 if not link['url'].startswith("http"):
-                    self.log_message.emit(f"Link thứ {link['index']} không hợp lệ: {link['url']}")
+                    self.log_message.emit(f"Link thứ {link['index']+1} không hợp lệ: {link['url']}")
                     continue
 
                 try:
-                    self.log_message.emit(f"Đang thu thập dữ liệu từ link {link['index']}/{num_of_links}")
+                    self.log_message.emit(f"Đang thu thập dữ liệu từ link {link['index']+1}/{num_of_links}")
                     crawl_output = crawl_worker.crawl_product(link['url'])
 
                     if not crawl_output:
@@ -78,10 +78,13 @@ class CrawlThread(QThread):
                     convert_worker.append_to_csv(llm_output)
                     successful_crawls += 1
 
+                    excel_manager.update_link(link['index'], True)
+
                     # Add delay between requests
                     self.msleep(self.delay * 1000)
 
                 except Exception as e:
+                    excel_manager.update_link(link['index'], False, str(e))
                     self.log_message.emit(f"Lỗi khi xử lý {link['url']}: {str(e)}")
                     continue
 

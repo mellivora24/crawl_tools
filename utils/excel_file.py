@@ -65,14 +65,14 @@ class ExcelManager:
         """
         return self.links.copy()  # Trả về copy để tránh modification bên ngoài
 
-    def update_link(self, stt: int, is_crawled: bool, note: str = ""):
+    def update_link(self, index: int, is_crawled: bool, note: str = ""):
         """
         Cập nhật trạng thái crawl cho một link theo STT và lưu ngay vào file Excel gốc
         """
         try:
-            link_to_update = next((link for link in self.links if link['stt'] == stt), None)
+            link_to_update = next((link for link in self.links if link['index'] == index), None)
             if link_to_update is None:
-                raise ValueError(f"Không tìm thấy link với STT: {stt}")
+                raise ValueError(f"Không tìm thấy link với INDEX = {index}")
 
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -90,10 +90,10 @@ class ExcelManager:
             # Lưu lại vào file Excel gốc
             self.save_to_excel()
 
-            print(f"Đã cập nhật link STT {stt}: Crawled={is_crawled}, Time={current_time}")
+            print(f"Đã cập nhật link STT {index}: Crawled={is_crawled}, Time={current_time}")
 
         except Exception as e:
-            print(f"Lỗi khi cập nhật link STT {stt}: {str(e)}")
+            print(f"Lỗi khi cập nhật link STT {index}: {str(e)}")
             raise
 
     def save_to_excel(self):
